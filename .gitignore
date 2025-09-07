@@ -35,8 +35,6 @@ ENV/
 *.pkl
 *.h5
 *.hdf5
-models/
-data/
 mlruns/
 mlflow-artifacts/
 
