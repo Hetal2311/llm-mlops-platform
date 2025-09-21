@@ -1,38 +1,47 @@
 import pandas as pd
-import torch
-from datasets import Dataset, load_dataset
-from transformers import AutoTokenizer
+from datasets import Dataset
 from typing import Dict, List, Tuple
 import logging
 
 logger = logging.getLogger(__name__)
 
 class DataPreprocessor:
-    def __init__(self, model_name: str = "google/flan-t5-small"):
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+    def __init__(self):
+        # Simple tokenizer approach - no external downloads
         self.max_length = 512
+
+    def simple_tokenize(self, text: str) -> List[int]:
+        """Simple tokenization for demonstration purposes."""
+        # Convert text to simple token IDs based on character/word mapping
+        tokens = text.lower().split()
+        # Simple hash-based token mapping
+        token_ids = [hash(token) % 10000 for token in tokens]
+        return token_ids[:self.max_length]
 
     def load_customer_support_data(self) -> Dataset:
         """Load and preprocess customer support dataset."""
         try:
-            # Using a public customer support dataset
-            dataset = load_dataset("bitext/Bitext-customer-support-llm-chatbot-training-dataset")
+            # Simple local dataset
+            data = [
+                {"instruction": "My order is delayed, what should I do?",
+                 "response": "I apologize for the delay. Let me check your order status."},
+                {"instruction": "How do I return an item?",
+                 "response": "You can return items within 30 days."},
+                {"instruction": "I forgot my password",
+                 "response": "Click 'Forgot Password' on the login page."},
+                {"instruction": "What are your business hours?",
+                 "response": "We're open Monday-Friday 9AM-5PM EST."},
+                {"instruction": "My payment was declined",
+                 "response": "Please check with your bank or try a different payment method."},
+            ]
 
-            # Convert to pandas for easier manipulation
-            df = pd.DataFrame(dataset['train'])
-
-            # Create instruction-response pairs for fine-tuning
+            df = pd.DataFrame(data)
             df['input_text'] = df['instruction'].apply(
                 lambda x: f"Customer query: {x}\nProvide a helpful response:"
             )
             df['target_text'] = df['response']
 
-            # Filter and clean data
-            df = self._clean_data(df)
-
-            # Convert back to Hugging Face dataset
             processed_dataset = Dataset.from_pandas(df)
-
             logger.info(f"Loaded {len(processed_dataset)} examples")
             return processed_dataset
 
@@ -40,45 +49,15 @@ class DataPreprocessor:
             logger.error(f"Error loading data: {e}")
             raise
 
-    def _clean_data(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Clean and filter the dataset."""
-        # Remove duplicates
-        df = df.drop_duplicates(subset=['instruction', 'response'])
-
-        # Filter by length
-        df = df[
-            (df['instruction'].str.len() > 10) &
-            (df['instruction'].str.len() < 500) &
-            (df['response'].str.len() > 10) &
-            (df['response'].str.len() < 500)
-        ]
-
-        # Remove null values
-        df = df.dropna(subset=['instruction', 'response'])
-
-        return df.reset_index(drop=True)
-
     def tokenize_function(self, examples: Dict) -> Dict:
-        """Tokenize the input and target texts."""
-        # Tokenize inputs
-        model_inputs = self.tokenizer(
-            examples['input_text'],
-            max_length=self.max_length,
-            truncation=True,
-            padding=True
-        )
+        """Simple tokenization function."""
+        input_ids = [self.simple_tokenize(text) for text in examples['input_text']]
+        labels = [self.simple_tokenize(text) for text in examples['target_text']]
 
-        # Tokenize targets
-        with self.tokenizer.as_target_tokenizer():
-            labels = self.tokenizer(
-                examples['target_text'],
-                max_length=self.max_length,
-                truncation=True,
-                padding=True
-            )
-
-        model_inputs["labels"] = labels["input_ids"]
-        return model_inputs
+        return {
+            "input_ids": input_ids,
+            "labels": labels
+        }
 
     def prepare_datasets(self) -> Tuple[Dataset, Dataset]:
         """Prepare training and validation datasets."""
@@ -89,17 +68,17 @@ class DataPreprocessor:
         train_dataset = train_test_split['train']
         eval_dataset = train_test_split['test']
 
-        # Tokenize datasets
+        # Apply tokenization
         train_dataset = train_dataset.map(
             self.tokenize_function,
             batched=True,
-            remove_columns=train_dataset.column_names
+            remove_columns=['instruction', 'response', 'input_text', 'target_text']
         )
 
         eval_dataset = eval_dataset.map(
             self.tokenize_function,
             batched=True,
-            remove_columns=eval_dataset.column_names
+            remove_columns=['instruction', 'response', 'input_text', 'target_text']
         )
 
         return train_dataset, eval_dataset
