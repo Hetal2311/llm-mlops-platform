@@ -1,0 +1,148 @@
+{
+  "models": [
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_163847",
+      "model_path": "models/simple-local-model_20250922_163847",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:38:48.001642"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_163848",
+      "model_path": "models/simple-local-model_20250922_163848",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:38:48.330935"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_163848",
+      "model_path": "models/simple-local-model_20250922_163848",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:38:48.352429"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_163848",
+      "model_path": "models/simple-local-model_20250922_163848",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:38:48.352946"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_164659",
+      "model_path": "models/simple-local-model_20250922_164659",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:46:59.784163"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_164700",
+      "model_path": "models/simple-local-model_20250922_164700",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:47:00.085761"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_164700",
+      "model_path": "models/simple-local-model_20250922_164700",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:47:00.107169"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_164700",
+      "model_path": "models/simple-local-model_20250922_164700",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:47:00.108118"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_165030",
+      "model_path": "models/simple-local-model_20250922_165030",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:50:30.060160"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_165030",
+      "model_path": "models/simple-local-model_20250922_165030",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:50:30.291698"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_165030",
+      "model_path": "models/simple-local-model_20250922_165030",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:50:30.313026"
+    },
+    {
+      "model_name": "simple-local-model",
+      "version": "1.0.0",
+      "experiment_id": "20250922_165030",
+      "model_path": "models/simple-local-model_20250922_165030",
+      "performance": {
+        "train_loss": 0.40993639120000014,
+        "eval_loss": 0.4211943423000001
+      },
+      "status": "completed",
+      "created_at": "2025-09-22T16:50:30.313626"
+    }
+  ]
+}
