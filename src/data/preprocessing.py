@@ -2,6 +2,38 @@ import pandas as pd
 from datasets import Dataset
 from typing import Dict, List, Tuple
 import logging
+import os
+import ssl
+import urllib3
+import certifi
+
+# Configure SSL for corporate environments
+os.environ['PYTHONHTTPSVERIFY'] = '0'
+os.environ['CURL_CA_BUNDLE'] = ''
+os.environ['REQUESTS_CA_BUNDLE'] = ''
+
+# Disable SSL warnings and verification
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+ssl._create_default_https_context = ssl._create_unverified_context
+
+# Monkey patch requests to skip SSL verification
+import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.ssl_ import create_urllib3_context
+
+class NoSSLVerifyHTTPAdapter(HTTPAdapter):
+    def init_poolmanager(self, *args, **kwargs):
+        context = create_urllib3_context()
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
+        kwargs['ssl_context'] = context
+        return super().init_poolmanager(*args, **kwargs)
+
+session = requests.Session()
+session.mount('https://', NoSSLVerifyHTTPAdapter())
+
+# Patch the requests module
+requests.Session.request = lambda self, *args, **kwargs: session.request(*args, **kwargs)
 
 logger = logging.getLogger(__name__)
 
